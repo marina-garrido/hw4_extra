@@ -1,0 +1,145 @@
+/* Reset some default styles */
+body, h1, h2, p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Set default styles for body and HTML elements */
+body {
+    font-family: "Libre Franklin", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    background-color: #f8f8f8;
+}
+
+/* Style for the logo container */
+.logo-container {
+    text-align: center;
+    overflow: hidden;
+}
+
+/* Style for the logo image */
+.logo-container img {
+    max-width: 20%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Style for the main banner */
+#banner {
+    text-align: center;
+    width: 100%;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url("hotdogs_4_19.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 100px 0;
+    color: #fff;
+}
+
+#banner h1 {
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* Style for the menu section */
+.menu {
+    background-color: #f8f8f8;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.menu h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.menu-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.menu-title {
+    font-weight: bold;
+    font-size: 20px;
+    color: #DC4E23;
+}
+
+.menu-description {
+    font-size: 14px;
+    color: #333;
+    margin-top: 5px;
+}
+
+.menu-price {
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+    margin-top: 5px;
+}
+
+/* Style for the order form */
+.order-form {
+    background-color: #fff;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.order-form h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.order-form label {
+    display: block;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.order-form input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.order-form button {
+    background-color: #DC4E23;
+    color: #fff;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+}
+
+/* Style for the order summary */
+.order-summary {
+    background-color: #fff;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.order-summary h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
