@@ -11,9 +11,26 @@ const itemQuantities = {};
 
 // Function to format currency
 function formatCurrency(amount) {
-    // Round the amount to two decimal places
     const roundedAmount = Math.round(amount * 100) / 100;
-    return '$' + roundedAmount.toFixed(2);
+
+    // Convert to a string
+    const amountString = roundedAmount.toString();
+
+    // Split the string 
+    const parts = amountString.split('.');
+
+    // If no decimal part add .00
+    if (parts.length === 1) {
+        return '$' + amountString + '.00';
+    }
+
+    // If one decimal part add a zero
+    if (parts[1].length === 1) {
+        return '$' + amountString + '0';
+    }
+
+    // If two decimal parts
+    return '$' + amountString;
 }
 
 // Function to calculate and display the order
