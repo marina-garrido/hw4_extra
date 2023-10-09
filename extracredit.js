@@ -1,81 +1,75 @@
 // Constants
-const ITEM_PRICES = {
-    "Hotdogs": 3.75,
-    "French Fries": 3.00,
-    "Drinks": 2.50
-};
 const TAX_RATE = 0.0625; // 6.25%
 
-// Initialize an object to store item quantities
-const itemQuantities = {};
+// Define an associative array for item names and prices
+const itemPrices = {
+    hotdogs: 3.75,
+    fries: 3.00,
+    sodas: 2.50
+};
 
-// Function to format currency
-function formatCurrency(amount) {
-    const roundedAmount = Math.round(amount * 100) / 100;
-
-    // Convert to a string
-    const amountString = roundedAmount.toString();
-
-    // Split the string 
-    const parts = amountString.split('.');
-
-    // If no decimal part add .00
-    if (parts.length === 1) {
-        return '$' + amountString + '.00';
-    }
-
-    // If one decimal part add a zero
-    if (parts[1].length === 1) {
-        return '$' + amountString + '0';
-    }
-
-    // If two decimal parts
-    return '$' + amountString;
-}
+// Define an associative array for item names and quantities
+const itemQuantities = {
+    hotdogs: 0,
+    fries: 0,
+    sodas: 0
+};
 
 // Function to calculate and display the order
 function calculateOrder() {
-    // Initialize variables for subtotal, discount, and tax
     let subtotal = 0;
-    let discount = 0;
-    let taxAmount = 0;
 
-    // Loop to get quantities from the user and calculate subtotal
-    for (const item in ITEM_PRICES) {
-        const quantity = parseInt(prompt(`How many ${item} do you want?`)) || 0;
-        itemQuantities[item] = quantity;
-        subtotal += quantity * ITEM_PRICES[item];
+    // Loop through itemQuantities to get quantities from the user
+    for (const itemName in itemQuantities) {
+        if (itemQuantities.hasOwnProperty(itemName)) {
+            const quantity = parseInt(prompt(`How many ${itemName} do you want?`)) || 0;
+            itemQuantities[itemName] = quantity;
+        }
     }
 
-    // Apply discount if subtotal is $25 or more
+    // Calculate subtotal using a loop
+    for (const itemName in itemQuantities) {
+        if (itemQuantities.hasOwnProperty(itemName)) {
+            subtotal += itemQuantities[itemName] * itemPrices[itemName];
+        }
+    }
+
+    // Apply discount if subtotal is at least $25
+    let discount = 0;
     if (subtotal >= 25) {
         discount = subtotal * 0.10;
     }
 
-    // Calculate tax amount
-    taxAmount = (subtotal - discount) * TAX_RATE;
-
-    // Calculate final total
+    // Calculate final total including tax
+    const taxAmount = (subtotal - discount) * TAX_RATE;
     const finalTotal = subtotal - discount + taxAmount;
 
-    // Display order details
+    // Get the div element where we want to display the order details
     const orderDetailsDiv = document.getElementById("order-details");
-    let orderDetailsHTML = '';
 
-    // Loop to display quantity and cost for each item
-    for (const item in itemQuantities) {
-        const quantity = itemQuantities[item];
-        const itemCost = quantity * ITEM_PRICES[item];
-        orderDetailsHTML += `<p>${item}: ${quantity} x ${formatCurrency(ITEM_PRICES[item])} = ${formatCurrency(itemCost)}</p>`;
+    // Generate the HTML for order details
+    let orderDetailsHTML = '<h2>Order Summary</h2>';
+
+    // Loop through itemQuantities to display quantities and costs
+    for (const itemName in itemQuantities) {
+        if (itemQuantities.hasOwnProperty(itemName)) {
+            const quantity = itemQuantities[itemName];
+            const cost = quantity * itemPrices[itemName];
+            orderDetailsHTML += `
+                <p>${itemName}: ${quantity} x $${itemPrices[itemName]} = $${cost.toFixed(2)}</p>
+            `;
+        }
     }
 
     orderDetailsHTML += `
-        <p>Subtotal: ${formatCurrency(subtotal)}</p>
-        <p>Discount: ${formatCurrency(discount)}</p>
-        <p>Tax: ${formatCurrency(taxAmount)}</p>
-        <h3>Total: ${formatCurrency(finalTotal)}</h3>
+        <p>Subtotal: $${subtotal.toFixed(2)}</p>
+        <p>Discount: $${discount.toFixed(2)}</p>
+        <p>Tax: $${taxAmount.toFixed(2)}</p>
+        <h3>Total: $${finalTotal.toFixed(2)}</h3>
     `;
 
     // Set the HTML content of the order details div
     orderDetailsDiv.innerHTML = orderDetailsHTML;
 }
+
+
