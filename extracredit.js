@@ -15,61 +15,75 @@ const itemQuantities = {
     sodas: 0
 };
 
+// Function to format currency
+function formatCurrency(amount) {
+    // Round the amount to two decimal places
+    const roundedAmount = Math.round(amount * 100) / 100;
+
+    // Convert to a string
+    const amountString = String(roundedAmount);
+
+    // Check if the string contains a decimal point
+    if (amountString.includes('.')) {
+        const parts = amountString.split('.');
+        let decimalPart = parts[1];
+
+        // Ensure two decimal places
+        if (decimalPart.length === 1) {
+            decimalPart += '0';
+        }
+
+        return '$' + parts[0] + '.' + decimalPart;
+    } else {
+        // No decimal part, add '.00'
+        return '$' + amountString + '.00';
+    }
+}
+
 // Function to calculate and display the order
 function calculateOrder() {
+    // Initialize variables for subtotal, discount, and tax
     let subtotal = 0;
-
-    // Loop through itemQuantities to get quantities from the user
-    for (const itemName in itemQuantities) {
-        if (itemQuantities.hasOwnProperty(itemName)) {
-            const quantity = parseInt(prompt(`How many ${itemName} do you want?`)) || 0;
-            itemQuantities[itemName] = quantity;
-        }
-    }
-
-    // Calculate subtotal using a loop
-    for (const itemName in itemQuantities) {
-        if (itemQuantities.hasOwnProperty(itemName)) {
-            subtotal += itemQuantities[itemName] * itemPrices[itemName];
-        }
-    }
-
-    // Apply discount if subtotal is at least $25
     let discount = 0;
+    let taxAmount = 0;
+
+    // Loop to get quantities from the user and calculate subtotal
+    for (const item in itemPrices) {
+        const quantity = parseInt(document.getElementById(item.toLowerCase()).value) || 0;
+        itemQuantities[item] = quantity;
+        subtotal += quantity * itemPrices[item];
+    }
+
+    // Apply discount if subtotal is $25 or more
     if (subtotal >= 25) {
         discount = subtotal * 0.10;
     }
 
-    // Calculate final total including tax
-    const taxAmount = (subtotal - discount) * TAX_RATE;
+    // Calculate tax amount
+    taxAmount = (subtotal - discount) * TAX_RATE;
+
+    // Calculate final total
     const finalTotal = subtotal - discount + taxAmount;
 
-    // Get the div element where we want to display the order details
+    // Display order details
     const orderDetailsDiv = document.getElementById("order-details");
+    let orderDetailsHTML = '';
 
-    // Generate the HTML for order details
-    let orderDetailsHTML = '<h2>Order Summary</h2>';
-
-    // Loop through itemQuantities to display quantities and costs
-    for (const itemName in itemQuantities) {
-        if (itemQuantities.hasOwnProperty(itemName)) {
-            const quantity = itemQuantities[itemName];
-            const cost = quantity * itemPrices[itemName];
-            orderDetailsHTML += `
-                <p>${itemName}: ${quantity} x $${itemPrices[itemName]} = $${cost.toFixed(2)}</p>
-            `;
-        }
+    // Loop to display quantity and cost for each item
+    for (const item in itemQuantities) {
+        const quantity = itemQuantities[item];
+        const itemCost = quantity * itemPrices[item];
+        orderDetailsHTML += `<p>${item}: ${quantity} x ${formatCurrency(itemPrices[item])} = ${formatCurrency(itemCost)}</p>`;
     }
 
     orderDetailsHTML += `
-        <p>Subtotal: $${subtotal.toFixed(2)}</p>
-        <p>Discount: $${discount.toFixed(2)}</p>
-        <p>Tax: $${taxAmount.toFixed(2)}</p>
-        <h3>Total: $${finalTotal.toFixed(2)}</h3>
+        <p>Subtotal: ${formatCurrency(subtotal)}</p>
+        <p>Discount: ${formatCurrency(discount)}</p>
+        <p>Tax: ${formatCurrency(taxAmount)}</p>
+        <h3>Total: ${formatCurrency(finalTotal)}</h3>
     `;
 
     // Set the HTML content of the order details div
     orderDetailsDiv.innerHTML = orderDetailsHTML;
 }
-
 
