@@ -52,14 +52,15 @@ Returns: None (displays the final order)
 Purpose: Calculate and display the order
 */
 function calculateOrder() {
-    let subtotal = 0;
+// Get quantities from the input fields
+    const numDogs = parseInt(document.getElementById("hotdogs").value) || 0;
+    const numFries = parseInt(document.getElementById("fries").value) || 0;
+    const numSodas = parseInt(document.getElementById("sodas").value) || 0;
 
-    // Loop through itemQuantities to get quantities and calculate subtotal
-    for (const item in itemQuantities) {
-        const quantity = parseInt(prompt(`Enter the quantity of ${item}:`)) || 0;
-        itemQuantities[item] = quantity;
-        subtotal += quantity * itemPrices[item];
-    }
+    // Update the itemQuantities associative array
+    itemQuantities.hotdogs = numDogs;
+    itemQuantities.fries = numFries;
+    itemQuantities.sodas = numSodas;
 
     // Apply discount if subtotal is $25 or more
     let discount = 0;
