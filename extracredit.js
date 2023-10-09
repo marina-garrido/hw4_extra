@@ -48,8 +48,8 @@ function calculateOrder() {
     let taxAmount = 0;
 
     // Loop to get quantities from the user and calculate subtotal
-    for (const item in itemPrices) {
-        const quantity = parseInt(document.getElementById(item.toLowerCase()).value) || 0;
+    for (const item in itemQuantities) {
+        const quantity = parseInt(document.getElementById(item).value) || 0;
         itemQuantities[item] = quantity;
         subtotal += quantity * itemPrices[item];
     }
