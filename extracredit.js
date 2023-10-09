@@ -62,4 +62,3 @@ function calculateOrder() {
     // Set the HTML content of the order details div
     orderDetailsDiv.innerHTML = orderDetailsHTML;
 }
-
