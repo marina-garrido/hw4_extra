@@ -19,25 +19,7 @@ const itemQuantities = {
 function formatCurrency(amount) {
     // Round the amount to two decimal places
     const roundedAmount = Math.round(amount * 100) / 100;
-
-    // Convert to a string
-    const amountString = String(roundedAmount);
-
-    // Check if the string contains a decimal point
-    if (amountString.includes('.')) {
-        const parts = amountString.split('.');
-        let decimalPart = parts[1];
-
-        // Ensure two decimal places
-        if (decimalPart.length === 1) {
-            decimalPart += '0';
-        }
-
-        return '$' + parts[0] + '.' + decimalPart;
-    } else {
-        // No decimal part, add '.00'
-        return '$' + amountString + '.00';
-    }
+    return '$' + roundedAmount.toFixed(2);
 }
 
 // Function to calculate and display the order
