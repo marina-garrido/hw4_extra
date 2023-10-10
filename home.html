@@ -16,7 +16,7 @@
 
     <main>
         <div id="banner">
-            <h1>Welcome to Joe's Hotdog Stand!</h1>
+            <h1>Welcome to Joe's Hotdog Stand Extra Credit!</h1>
         </div>
         
         <div class="menu">
@@ -43,7 +43,6 @@
             
             <button onclick="calculateOrder()">Calculate Order</button>
 
-            <!-- Order Summary -->
             <div class="order-summary">
                 <h2>Order Summary</h2>
                 <div id="order-details"></div>
@@ -52,42 +51,40 @@
     </main>
 
     <script>
-        // Define menu items and prices using associative arrays
+        const TAX_RATE = 0.0625; 
+
+        // Associative arrays
         const menuItems = {
             "Hotdog": 3.75,
             "French Fries": 3.00,
             "Drinks": 2.50
         };
 
-        // Initialize an associative array for quantities
+        // Initialize 
         const quantities = {};
 
-        // Function to calculate and display the order
         function calculateOrder() {
-            // Loop to get quantities from the user
+            // Loop to get quantities 
             for (const item in menuItems) {
                 const itemName = item;
                 const quantity = parseInt(prompt(`How many ${itemName} do you want?`)) || 0;
                 quantities[itemName] = quantity;
             }
 
-            // Calculate subtotal using a loop
+            // Subtotal using a loop
             let subtotal = 0;
             for (const item in menuItems) {
                 subtotal += menuItems[item] * quantities[item];
             }
 
-            // Apply discount if subtotal is at least $25
             let discount = 0;
             if (subtotal >= 25) {
                 discount = subtotal * 0.10;
             }
 
-            // Calculate final total including tax
             const taxAmount = (subtotal - discount) * TAX_RATE;
             const finalTotal = subtotal - discount + taxAmount;
 
-            // Get the div element where we want to display the order details
             const orderDetailsDiv = document.getElementById("order-details");
 
             // Generate the HTML for order details
@@ -110,36 +107,27 @@
                 <h3>Total: ${formatCurrency(finalTotal)}</h3>
             `;
 
-            // Set the HTML content of the order details div
             orderDetailsDiv.innerHTML = orderDetailsHTML;
         }
 
-        // Define constants
-        const TAX_RATE = 0.0625; // 6.25%
-
         function formatCurrency(amount) {
-            // Round the amount to two decimal places
             const roundedAmount = Math.round(amount * 100) / 100;
 
-            // Convert to a string
             const amountString = roundedAmount.toString();
 
-            // Split the string into parts
             const parts = amountString.split('.');
 
-            // Check if there's no decimal part
             if (parts.length === 1) {
-                return '$' + amountString + '.00'; // Add '.00' if no decimal part
+                return '$' + amountString + '.00';
             } else {
-                // Check if there's only one digit after the decimal point
+        
                 if (parts[1].length === 1) {
-                    return '$' + amountString + '0'; // Add '0' if there's only one digit after the decimal point
-                } else {
-                    return '$' + amountString; // Use the existing decimal places
+                    return '$' + amountString + '0'; 
+
+                    return '$' + amountString; 
                 }
             }
         }
     </script>
 </body>
 </html>
-
